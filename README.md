@@ -14,4 +14,4 @@ trus nanti di atas kanan ada gambar pesil click itu untuk ngedit
 2. Harold Tanuwijaya (672022107)
 3. Cornelius Ardhani Yoga Pratama (672022204)
 4. Abdurrahman Al Munawar (672022304)
-5. Anggota terakhir g tau siapa sumpah ngk aktif di grup sama sekali
+5. Kevin Nahot (672022322)
