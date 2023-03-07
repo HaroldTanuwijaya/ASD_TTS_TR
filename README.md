@@ -3,6 +3,9 @@
 Okay gaes codingan nya bisa di kotak katik tinggal click tuh file "tokobaju.c" nya :D
 trus nanti di atas kanan ada gambar pesil click itu untuk ngedit 
 
+## Update changes
+- Sudah ditambahin menu merk bajunya (Harold)
+
 
 ## Bug Report (Kalau ada bisa tambahin disini)
 - bug 1
