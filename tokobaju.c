@@ -269,6 +269,7 @@ void menu(){
 
     switch (x){
         case 1:
+		    merkbaju();
             break;
         case 2:
             break;
@@ -282,6 +283,33 @@ void menu(){
 
 }
 }
+
+void merkbaju(){
+    int ch;
+    system("cls");
+    system("COLOR 0b");
+    cover2();
+    gotoxy(53,10); printf("Merk Baju");
+    gotoxy(47,14); printf(" 1. LEVIS");
+    gotoxy(47,15); printf(" 2. THE EXECUTIVES");
+    gotoxy(47,16); printf(" 3. 3 SECONDS");
+    gotoxy(47,17); printf(" 4. UNIQLO");
+    gotoxy(47,18); printf(" 5. ZARA");
+    gotoxy(47,19); printf(" 6. BLUEBERRY");
+    gotoxy(47,20); printf(" 7. VICTORIA SECRETS");
+    gotoxy(47,21); printf(" 8. ERICO");
+    gotoxy(47,22); printf(" 9. SUPREME");
+    gotoxy(47,23); printf(" 10. H & H");
+    gotoxy(47,24); printf(" 11. BALENCIAGA");
+    gotoxy(45,26); printf("Press any key to go back to menu");
+    while (1) {
+        if ( kbhit() ) {
+            ch = getch();
+            if (ch == 13){
+                menu();}}}
+
+}
+
 
 void ex(){
     int i;
@@ -561,6 +589,25 @@ void cover1(){
     }
     for (i=8;i<=21;i++){
         gotoxy(93,i);printf("%c",219);
+    }
+}
+
+void cover2(){
+    int i;
+    for (i=42;i<=79;i++){
+        gotoxy(i,8);printf("%c",178);
+    }
+    for (i=42;i<=79;i++){
+        gotoxy(i,28);printf("%c",178);
+    }
+    for (i=42;i<=79;i++){
+        gotoxy(i,12);printf("%c",178);
+    }
+    for (i=8;i<=28;i++){
+        gotoxy(42,i);printf("%c",178);
+    }
+    for (i=8;i<=28;i++){
+        gotoxy(79,i);printf("%c",178);
     }
 }
 
