@@ -308,6 +308,141 @@ void merkbaju(){//harold
                 menu();}}}
 
 }
+void kasir()
+{
+    printf("\n\tSelamat Datang di Toko Baju \"SERBA ADA\"\t\n");
+    jenis_barang();
+}
+void jenis_barang()
+{
+
+int jumlahbarang, pertama, ke1;
+int subtotal[15][15];
+int ary[11][11];
+int arr[11][11];
+int harga[] ={0,80000,50000,550000,150000,125000,300000,350000,150000,140000,450000,660000};
+char pilihan;
+char *nama_barang[] = {" ", "      Levis","The EXECUTIVERS","   3 Seconds","       Uniqlo","       Zara"," BlueBerry","Victoria Secrets","   Erico","  Supreme"," H&H     ","  Balenciaga"};
+char *nomor[]={" ","Pertama","Kedua","Ketiga","Keempat","Kelima","Keenam","Ketujuh","Kedelapan","Kesembilan","Kesepuluh","Kesebelas"};
+char Rupiah [] = "Rp.";
+char *harga_barang[] ={" ","80.000.00","50.000.00", "550.000.00","150.000.00","125.000.00","300.000.00","350.000","150.000.00","140.000.00","450.000.00","660.000.00"};
+char nol_dua[]={".00"};
+
+
+    printf("\n\t=================================================\n");
+    printf("\t| %s|      %s\t| %s\t|\n", "No.", "Nama Barang", "Harga Barang(Rupiah)");
+    printf("\t|----|------------------|-----------------------|\n");
+    printf("\t|  1 |\t%s\t| %s  %s\t|\n", nama_barang[1], Rupiah, harga_barang[1]);
+    printf("\t|  2 |\t%s\t| %s  %s\t|\n", nama_barang[2], Rupiah, harga_barang[2]);
+    printf("\t|  3 |\t%s\t| %s  %s\t|\n", nama_barang[3], Rupiah, harga_barang[3]);
+    printf("\t|  4 |\t%s\t| %s  %s\t|\n", nama_barang[4], Rupiah, harga_barang[4]);
+    printf("\t|  5 |\t%s\t| %s  %s\t|\n", nama_barang[5], Rupiah, harga_barang[5]);
+    printf("\t|  6 |\t%s\t| %s  %s\t|\n", nama_barang[6], Rupiah, harga_barang[6]);
+    printf("\t|  7 |\t%s\t| %s  %s\t|\n", nama_barang[7],Rupiah, harga_barang[7]);
+    printf("\t|  8 |\t%s\t| %s  %s\t|\n", nama_barang[8], Rupiah, harga_barang[8]);
+    printf("\t|  9 |\t%s\t| %s  %s\t|\n", nama_barang[9], Rupiah, harga_barang[9]);
+    printf("\t| 10 |\t%s\t| %s  %s\t|\n", nama_barang[10], Rupiah, harga_barang[10]);
+    printf("\t| 11 |\t%s\t| %s  %s\t|\n", nama_barang[11], Rupiah, harga_barang[11]);
+    printf("\t=================================================");
+
+    printf("\n\nBerapa jenis barang yang anda beli :  ");
+    scanf("%d",&jumlahbarang);
+
+for(pertama = 1; pertama <= jumlahbarang; pertama++) //"pertama = 1" menunjukan letak array pada 1 yaitu kata pertama
+    {
+    for(ke1 = 1; ke1 < 2; ke1++){
+        printf("\nMasukan barang %s : ",nomor[pertama]);//mengambil barang pada array yaitu kata pertama
+        scanf("%d",&ary[pertama][ke1]);
+        printf("Masukan jumlah barang : ");
+        scanf("%d",&arr[pertama][ke1]);
+        }
+        }
+        printf("\n");
+
+
+
+        system("cls");
+
+int uang, kembalian;
+    printf("\n\tDaftar Keranjang Pembelian Anda : \n");
+    printf("\t=================================================================================\n");
+    printf("\t|%s |      %s | %s \t| %s | %s \t|\n", "No.", "Nama Barang", "Harga Barang(Rupiah)", "Jumlah Barang", "Subtotal");
+    printf("\t|----|------------------|-----------------------|---------------|---------------|\n");
+//menampilkan subtotal pada tabel
+    for(pertama=1;pertama<=jumlahbarang;pertama++)
+   {
+    for(ke1 = 1; ke1 < 2; ke1++)
+        {
+        subtotal[pertama][ke1]=((int) harga[ary[pertama][ke1]] * (int) arr[pertama][ke1]);
+        }
+   }
+for(pertama=1;pertama<=jumlahbarang;pertama++)
+   {
+   for(ke1 = 1; ke1 < 2; ke1++)
+   {
+   printf("\t| %d  |   %s | %s %s     \t| \t%d \t| %s%d%s \t|\n", pertama, nama_barang[ary[pertama][ke1]],Rupiah,harga_barang[ary[pertama][ke1]],arr[pertama][ke1],Rupiah,subtotal[pertama][ke1],nol_dua);
+
+   }
+   }
+    printf("\t=================================================================================\n");
+
+//menampilkan hasil total penjumlahan subtotal
+   int total=0;
+for(pertama = 1; pertama <= jumlahbarang; pertama++)
+   {
+    for(ke1 = 1; ke1 < 2; ke1++)
+        {
+         total = total + subtotal[pertama][ke1]++;
+        }
+   }
+
+    printf("\nTotal yang harus anda bayar adalah : %s%d%s",Rupiah,total,nol_dua);
+
+    uang2:
+
+    printf("\n\nMasukan uang anda :%s ",Rupiah);
+    scanf("%d",&uang);
+
+if(uang < total) //jika uang nya tidak mencukupi maka akan print angka dibawah
+   {
+    printf("\nMaaf uang anda kurang, Silahkan ulangi transaksi!!!\n");
+    printf("Silahkan masukan kembali uang anda!!!");
+
+goto uang2;
+   }
+        //untuk menampilkan uang kembalian
+        kembalian = uang - total;
+
+    printf("Kembalian anda : %s%d%s\n\n",Rupiah,kembalian,nol_dua);
+    printf("Terimakasih Sudah Bertransaksi Di Toko Kami");
+    printf("\n\nApakah anda ingin melanjutkan proses transaksi (y/t) : ");
+    scanf("%s",&pilihan);
+
+
+
+    pilihan:
+
+switch(pilihan)
+    {
+case 'y':
+    system("cls");
+kasir();
+break;
+
+case 't':
+    printf("\tTerimakasih banyak\n");
+break;
+
+default:
+    printf("Pilihan yang anda masukan salah!!!\n");
+    printf("Silahkan masukan pilihan yang benar!!!");
+
+goto pilihan;
+    }
+
+
+}
+
 
 
 void ex(){//tiara
