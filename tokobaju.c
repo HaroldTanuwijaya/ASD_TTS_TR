@@ -308,7 +308,7 @@ void merkbaju(){//harold
                 menu();}}}
 
 }
-void kasir()
+void kalkulasi_harga()
 {
     printf("\n\tSelamat Datang di Toko Baju \"SERBA ADA\"\t\n");
     jenis_barang();
@@ -426,7 +426,7 @@ switch(pilihan)
     {
 case 'y':
     system("cls");
-kasir();
+kalkulasi_harga();
 break;
 
 case 't':
