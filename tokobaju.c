@@ -8,22 +8,22 @@
 #define MAX_PASSWORD_LENGTH 50
 #define MAX_USERS 100
 
-void gotoxy(int x, int y){
+void gotoxy(int x, int y){ //tiara
     COORD coord;
     coord.X = x;
     coord.Y = y;
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-struct User {
+struct User {//tiara
   char username[MAX_USERNAME_LENGTH];
   char password[MAX_PASSWORD_LENGTH];
 };
 
-struct User users[MAX_USERS];
+struct User users[MAX_USERS];//tiara
 int num_users = 0;
 
-void read_users() {
+void read_users() {//tiara
   FILE *fp;
   fp = fopen("users.txt", "r");
 
@@ -43,7 +43,7 @@ void read_users() {
   fclose(fp);
 }
 
-void write_users() {
+void write_users() {//tiara
   FILE *fp;
   fp = fopen("users.txt", "w");
 
@@ -68,7 +68,7 @@ int username_exists(char* username) {
   return 0;
 }
 
-void takepassword(char pwd[50]){
+void takepassword(char pwd[50]){//tiara
 	int i;
 	char ch;
 	while(1){
@@ -89,7 +89,7 @@ void takepassword(char pwd[50]){
 }
 
 
-int main(){
+int main(){//tiara
     system("cls");
 	system("color 0b");
 	FILE *fp;
@@ -122,7 +122,7 @@ int main(){
 	}
 }
 
-void signup() {
+void signup() {//tiara
     system("cls");
     char username[MAX_USERNAME_LENGTH];
     char password[MAX_PASSWORD_LENGTH];
@@ -147,7 +147,7 @@ void signup() {
     getch();
 }
 
-void login(){
+void login(){//tiara
     temp:
     system("cls");
     cover1();
@@ -234,7 +234,7 @@ void login(){
     }
 }
 
-void menu(){
+void menu(){//tiara
     system("cls");
     system("COLOR 0b");
     cover();
@@ -283,7 +283,7 @@ void menu(){
 
 }
 }
-void merkbaju(){
+void merkbaju(){//harold
     int ch;
     system("cls");
     system("COLOR 0b");
@@ -310,7 +310,7 @@ void merkbaju(){
 }
 
 
-void ex(){
+void ex(){//tiara
     int i;
     system("cls");
     system("COLOR b");
@@ -488,7 +488,7 @@ void ex(){
     exit(0);
 }
 
-void invalid(){
+void invalid(){//tiara
     int i;
     system("cls");
     gotoxy(52,11);printf("Loading..");
@@ -519,7 +519,7 @@ void invalid(){
 
 
 
-void welcome(){
+void welcome(){//tiara
     int i;
     system("cls");
     gotoxy(52,11);printf("Loading..");
@@ -555,7 +555,7 @@ void welcome(){
     Sleep(1000);
 }
 
-void cover(){
+void cover(){//tiara
     int i;
     for (i=42;i<=79;i++){
         gotoxy(i,8);printf("%c",178);
@@ -574,7 +574,7 @@ void cover(){
     }
 }
 
-void cover1(){
+void cover1(){//tiara
     int i;
     system("color 0b");
     for (i=25;i<=93;i++){
@@ -591,7 +591,7 @@ void cover1(){
     }
 }
 
-void cover2(){
+void cover2(){//harold
     int i;
     for (i=42;i<=79;i++){
         gotoxy(i,8);printf("%c",178);
@@ -610,7 +610,7 @@ void cover2(){
     }
 }
 
-void arrowhere (int realposition,int arrowposition){
+void arrowhere (int realposition,int arrowposition){//tiara
     if(realposition == arrowposition){
         printf("-->");
     }else{
