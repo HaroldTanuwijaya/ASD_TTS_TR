@@ -269,7 +269,7 @@ void menu(){
 
     switch (x){
         case 1:
-		    merkbaju();
+	    merkbaju();
             break;
         case 2:
             break;
@@ -283,7 +283,6 @@ void menu(){
 
 }
 }
-
 void merkbaju(){
     int ch;
     system("cls");
