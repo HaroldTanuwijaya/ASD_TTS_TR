@@ -50,6 +50,7 @@ int writefile(){
     fclose(f);
     return 0;
 }
+
 int readFile(){
     int n = 0;
     int i;
@@ -73,67 +74,29 @@ int readFile(){
     return n;
 }
 
-void gotoxy(int x, int y){ //tiara
+void gotoxy(int x, int y){
     COORD coord;
     coord.X = x;
     coord.Y = y;
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-struct User {//tiara
+struct User {
   char username[MAX_USERNAME_LENGTH];
   char password[MAX_PASSWORD_LENGTH];
-};
+}; struct User users[MAX_USERS];//tiara
+   int num_users = 0,quant;
 
-struct User users[MAX_USERS];//tiara
-int num_users = 0,quant;
-
-void read_users() {//tiara
-  FILE *fp;
-  fp = fopen("users.txt", "r");
-
-  if (fp == NULL) {
-    return;
-  }
-
-  char buffer[100];
-  while (fgets(buffer, 100, fp) != NULL) {
-    char* found_username = strtok(buffer, " ");
-    char* found_password = strtok(NULL, " ");
-    strcpy(users[num_users].username, found_username);
-    strcpy(users[num_users].password, found_password);
-    num_users++;
-  }
-
-  fclose(fp);
-}
-
-void write_users() {//tiara
-  FILE *fp;
-  fp = fopen("users.txt", "w");
-
-  if (fp == NULL) {
-    printf("Failed to open file.\n");
-    return;
-  }
-
+int username_exists(char* username,char* password) {
   for (int i = 0; i < num_users; i++) {
-    fprintf(fp, "%s %s\n", users[i].username, users[i].password);
-  }
-
-  fclose(fp);
-}
-
-int username_exists(char* username) {
-  for (int i = 0; i < num_users; i++) {
-    if (strcmp(users[i].username, username) == 0) {
+    if (strcmp(users[i].username, username) == 0 && strcmp(users[i].password, password)==0) {
       return 1;
     }
   }
   return 0;
 }
 
-void takepassword(char pwd[50]){//tiara
+void takepassword(char pwd[50]){
 	int i;
 	char ch;
 	while(1){
@@ -153,24 +116,23 @@ void takepassword(char pwd[50]){//tiara
 	}
 }
 
-int main(){//tiara
+
+int main(){
     system("cls");
-    system("color 0b");
-	FILE *fp;
-	int opt,usrFound = 0;
-	cover();
+    system("COLOR 0b");
+    cover();
     int position = 1;
     int keyPressed = 0;
     int maxoption = 3;
     gotoxy(45,10);printf("Welcome to authentication system");
 	gotoxy(46,14);printf("Please choose your operation");
     while(keyPressed != 13){
-        gotoxy(46,15);
-        arrowhere(1,position); printf("1.Signup");
-        gotoxy(46,16);
-        arrowhere(2,position); printf("2.Login");//JADINYA ADMIN ASW INI BUKAN PELANGGAN BANGSATTTTT JADI BINGGUNG KAN KONSEPNYA GMN
-        gotoxy(46,17);
-        arrowhere(3,position); printf("3.Exit");
+        gotoxy(48,15);
+        arrowhere(1,position); printf(" 1.Signup");
+        gotoxy(48,16);
+        arrowhere(2,position); printf(" 2.Login");
+        gotoxy(48,17);
+        arrowhere(3,position); printf(" 3.Exit");
         keyPressed = getch();
         if(keyPressed == 80 && position !=3){
             position++;
@@ -186,7 +148,7 @@ int main(){//tiara
     int b;
 
     switch (x){
-		case 1:
+        case 1:
 		    signup();
 		    main();
             break;
@@ -200,10 +162,11 @@ int main(){//tiara
         default:
             main();
     }
+
 }
 
 
-void signup() {//tiara
+void signup() {
     system("cls");
     char username[MAX_USERNAME_LENGTH];
     char password[MAX_PASSWORD_LENGTH];
@@ -212,8 +175,8 @@ void signup() {//tiara
     gotoxy(32,13);printf("Enter a Username: ");
     scanf("%s", username);
     gotoxy(32,14);printf("Enter a password: ");
-    takepassword(password);//fungsi takepassword untuk inputan bintang
-    if (username_exists(username)) {
+    takepassword(password);
+    if (username_exists(username,password)) {
         gotoxy(32,19);printf("Username already exists.\n");
         getch();
         signup();
@@ -223,14 +186,11 @@ void signup() {//tiara
     strcpy(user.password, password);
     users[num_users] = user;
     num_users++;
-    write_users();
     gotoxy(32,19);printf("Account created successfully.\n");
     getch();
 }
 
-void login(){//tiara
-
-
+void login(){
     temp:
     system("cls");
     cover1();
@@ -250,7 +210,7 @@ void login(){//tiara
             menu();
         }
         else if(strcmp(users[i].username, username) == 1 && strcmp(users[i].password, password) == 1){
-
+            invalid();
             gotoxy(45,17);printf("User is not registered!");
             Beep(750,300);
             getch();
@@ -272,7 +232,7 @@ void login(){//tiara
                 main();
             }
         else if((strcmp(users[i].username, username) == 1 && strcmp(users[i].password, password) == 0)||(strcmp(users[i].username, username) == 0 && strcmp(users[i].password, password))){
-
+            invalid();
             gotoxy(45,17);printf("Password do not matched!");
             Beep(750,300);
             getch();
@@ -294,6 +254,7 @@ void login(){//tiara
 
         }
     }
+    invalid();
     gotoxy(45,17);printf("User is not registered!");
     getch();
     system("cls");
@@ -312,8 +273,11 @@ void login(){//tiara
         system("cls");
         goto temp3;
     }
+
     }
 }
+
+
 void merkbaju(){//harold
     int ch,i,n;
     system("cls");
@@ -594,7 +558,7 @@ void menu(){//tiara
 
     switch (x){
         case 1:
-	    merkbaju();
+            merkbaju();
             break;
         case 2:
             menu2();
@@ -890,6 +854,36 @@ void cover1(){//tiara
         gotoxy(93,i);printf("%c",219);
     }
 }
+
+void invalid(){//TIARA
+    int i;
+    system("cls");
+    gotoxy(52,11);printf("Loading..");
+    gotoxy(51,17);printf("Processing");
+    gotoxy(74,15);printf("%c",217);
+    gotoxy(38,15);printf("%c",192);
+    gotoxy(38,13);printf("%c",218);
+    gotoxy(74,13);printf("%c",191);
+    for(i=40;i<73;i++){
+    gotoxy(i,14);printf("%c",177);}
+    for(i=14;i<15;i++){
+    gotoxy(38,i);printf("%c",179);}
+    for(i=14;i<15;i++){
+    gotoxy(74,i);printf("%c",179);}
+    for(i=39;i<74;i++){
+    gotoxy(i,15);printf("%c",196);}
+    for(i=39;i<74;i++){
+    gotoxy(i,13);printf("%c",196);}
+    system("COLOR 7");
+    gotoxy(40,14);
+    for(i=0;i<33;i++){
+        printf("%c",219);
+        Sleep(100);
+    }
+    system("COLOR 4");
+    Beep(750,300);
+}
+
 
 void arrowhere (int realposition,int arrowposition){//tiara
     if(realposition == arrowposition){
