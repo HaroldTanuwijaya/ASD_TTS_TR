@@ -1,12 +1,75 @@
 #include<stdio.h>
 #include<conio.h>
 #include<windows.h>
+#include<string.h>
+#include <stdlib.h>
+#define true 0
+#define false 1
 #define ENTER 13
 #define TAB 9
 #define BCKSPC 8
 #define MAX_USERNAME_LENGTH 50
 #define MAX_PASSWORD_LENGTH 50
 #define MAX_USERS 100
+struct product{
+		char id[10];   // product code/no.
+		char name[20]; // product name
+		int  quantity; // remaining quantity of product. Subtract from the original quantity the quantity purchased
+        int  numSold;  // initially zero, when no purchase yet.
+		float price;   // price of one piece of product
+		float sales;   // accumulated sales, total sales for this product
+		float total;
+	};
+	struct product prod[30];//the maximum array elements.
+	int count = 0;	// this will be incremented if there is a new product and this is the
+ 	FILE *f;	//file pointer
+
+int writefile(){
+
+    int i;
+    f = fopen("inventory.txt", "w");  // ayaw i append; change from f = fopen("inventory.txt", "a");
+    if (f == NULL)
+        return -1;
+    fprintf(f, "%d\n", count);
+    for (i = 0; i < count; ++i) // writing all the details from all the function to the text file.
+    {
+        // Changed
+        fputs(prod[i].id, f);
+        fprintf(f, "\n");
+        fputs(prod[i].name, f);
+        fprintf(f, "\n");
+        fprintf(f, "%d\n", prod[i].quantity);
+        fprintf(f, "%d\n", prod[i].numSold);
+        fprintf(f, "%f\n", prod[i].price);
+        fprintf(f, "%f\n", prod[i].sales);
+        fprintf(f, "%f\n", prod[i].total);
+    }
+    fclose(f);
+    return 0;
+}
+int readFile(){
+    int n = 0;
+    int i;
+    f = fopen("inventory.txt", "r");
+    if (f == NULL)
+        return -1;
+    fscanf(f, "%d\n", &n);
+    for (i = 0; i < n; ++i)
+    {
+        fgets(prod[i].id, 10, f);
+        prod[i].id[strlen(prod[i].id) - 1] = 0; // remove new lines
+        fgets(prod[i].name, 20, f);
+        prod[i].name[strlen(prod[i].name)-1] = 0; // remove new lines
+        fscanf(f, "%d", &prod[i].quantity);
+        fscanf(f, "%d", &prod[i].numSold);
+        fscanf(f, "%f", &prod[i].price);
+        fscanf(f, "%f\n", &prod[i].sales);
+        fscanf(f, "%f\n",&prod[i].total);
+    }
+    fclose(f);
+    return n;
+}
+
 
 void gotoxy(int x, int y){ //tiara
     COORD coord;
@@ -21,7 +84,7 @@ struct User {//tiara
 };
 
 struct User users[MAX_USERS];//tiara
-int num_users = 0;
+int num_users = 0,quant;
 
 void read_users() {//tiara
   FILE *fp;
@@ -148,6 +211,11 @@ void signup() {//tiara
 }
 
 void login(){//tiara
+
+
+
+
+
     temp:
     system("cls");
     cover1();
@@ -167,7 +235,7 @@ void login(){//tiara
             menu();
         }
         else if(strcmp(users[i].username, username) == 1 && strcmp(users[i].password, password) == 1){
-            invalid();
+
             gotoxy(45,17);printf("User is not registered!");
             Beep(750,300);
             getch();
@@ -189,7 +257,7 @@ void login(){//tiara
                 main();
             }
         else if((strcmp(users[i].username, username) == 1 && strcmp(users[i].password, password) == 0)||(strcmp(users[i].username, username) == 0 && strcmp(users[i].password, password))){
-            invalid();
+
             gotoxy(45,17);printf("Password do not matched!");
             Beep(750,300);
             getch();
@@ -211,7 +279,7 @@ void login(){//tiara
 
         }
     }
-    invalid();
+
     gotoxy(45,17);printf("User is not registered!");
     getch();
     system("cls");
@@ -233,6 +301,273 @@ void login(){//tiara
 
     }
 }
+void merkbaju(){//harold
+
+
+
+
+
+    int ch,i,n;
+    system("cls");
+    system("COLOR 0b");
+    count = readFile();
+    if (count < 0)
+    puts("cannot open file");
+ printf("------------------------------------------------------------------------------------\n");
+   printf("S.N.|    NAME     |   ID  |     QUANTITY      |    PRICE    | \n");
+   printf("------------------------------------------------------------------------------------\n");
+    for (i=0;i<count;i++){
+   printf("%d     %-10s       %-8s     %-5d             %-6.2f        \n",i+1,prod[i].name,prod[i].id,prod[i].quantity,prod[i].price);
+   }
+    gotoxy(45,26); printf("Press any key to go back to menu");
+    while (1) {
+        if ( kbhit() ) {
+            ch = getch();
+            if (ch == 13){
+                menu();}}}
+
+}
+void deleteprod(){
+	count=readFile();
+	char id[10];
+	int i,j;
+	int z=false;
+printf("Enter the id that you want to be delete : "); //user's input for deleting.
+fflush(stdin);
+gets(id);
+
+for(i=0;i<count;i++){		//loop to finding the user's input
+		z=true;
+	if(strcmp(prod[i].id,id)==0){ // if the user's input matched the data
+	for( j=i; j<(count-1); j++)	// it will erase the selected data.
+			{
+				prod[j]=prod[j+1];
+			}
+			count--;
+	}
+}
+if(z==false){	// will be executed if the product id is not available.
+	printf("Cant find product id: %s .",id);
+}
+writefile();
+menu();
+}
+
+void menu2(){
+
+
+    system("COLOR 0A");
+
+int key=0;
+int p=1;
+while(key!=13){
+      system("cls");
+      fflush(stdin);
+
+cover();
+    gotoxy(47,14);arrowhere(1,p); printf("1. tambah merk\n");
+    gotoxy(47,15);arrowhere(2,p); printf("2. edit baranggg\n");
+    gotoxy(47,16);arrowhere(3,p); printf("3. delete produk \n");
+    gotoxy(47,17);arrowhere(4,p); printf("4. balik menu \n");
+ key=getch();
+  if (key==80 && p !=4){
+    p++;
+  }
+  else if(key==72 && p!=1){
+    p--;
+}
+    else{
+        p=p;
+    }}
+
+    if(key==13 && p==1){
+    nambahmerk();
+    }
+
+else if(key==13 && p==2){
+    editProd();
+ }
+ else if(key==13 && p==3){
+     deleteprod();
+ }
+  else if(key==13 && p==4){
+     menu();
+ }
+}
+void nambahmerk(){
+system("cls");
+  	printf("Tambah merk baju:\n");
+	readFile();		//reading the files .
+  	    if (count>0) {
+  	    count=readFile();
+  		IDChecker(0,count); // to check if the id is already used.
+		}
+	else{
+		printf("\nID Baju: ");
+		fflush(stdin);
+		gets(prod[count].id);
+		}
+		printf("Merk baju: ");gets(prod[count].name);
+		printf("Stok baju: ");scanf("%d",&prod[count].quantity);
+		printf("Harga : ");scanf("%f",&prod[count].price);
+		++count; // increment count for the product positions and how many are they in the array.
+
+	writefile(); // putting/saving this to the file.
+	menu();
+}
+
+int checkID(char id[]){ // checking the id if available
+	int i;
+count=readFile();
+
+
+ 		readFile();
+ 		for(i=0;i<count;i++){
+
+	if(strcmp(id,prod[i].id)!=0){ //if the id and data id doesnt match.
+
+			 fclose(f);
+		}
+   return 1;		// returning an error.
+  }
+
+ fclose(f);
+ menu();
+ return 0; // return 0 if no error.
+}
+
+int IDChecker(int i, int j){
+	count=readFile();
+    printf("Product ID: ");
+    fflush(stdin);
+	gets(prod[count].id);
+    if (strcmp(prod[i].id,prod[j].id)==0){
+        printf("ID number is already taken!");
+        return IDChecker(i++,j--);
+		}
+}
+
+void editProd(){
+    system("cls");
+	char id[10];
+int test;
+int i;
+	int choice;
+  printf("EDIT A PRODUCT!");
+  printf("\nEnter the id of the product that you want to edit: ");
+	fflush(stdin);
+	gets(id);
+	test=checkID(id);
+    if (test == 0)
+ {
+  printf("The id num %s is not found.", id);
+ }
+ else
+ {
+ 		readFile();
+  {
+	for(i=0;i<count;i++){
+
+  if(strcmp(id,prod[i].id)!=0) // if the data is not empty
+	writefile();
+   else
+   {
+    printf("\n1. Update Nama Merk? ");
+    printf("\n2. Update Stok barang?");
+    printf("\n3. Update Harga barang?");
+    printf("\nEnter your choice:");
+    fflush(stdin);
+    scanf("%d", &choice);
+
+    switch (choice)
+    {
+    case 1:
+     printf("Enter new Name: ");
+    	fflush(stdin);
+        gets(prod[i].name);
+     break;
+    case 2:
+     printf("Enter Quantity: ");
+    scanf("%d",&prod[i].quantity);
+    break;
+    case 3:
+     printf("Enter the new price: ");
+    scanf("%f",&prod[i].price);
+     break;
+    default:
+     printf("Invalid Selection");
+     break;
+    }
+   writefile();
+   }
+
+   }
+  }
+  fclose(f);
+  f = fopen("Inventory.txt", "r");
+ readFile();
+ {
+   writefile();
+  }
+  fclose(f);
+  printf("RECORD UPDATED");
+  menu();
+ }
+}
+
+void purchaseprod(){// function for purchasing a product
+    system("cls");
+	int i,ch;
+    char id[10];
+    int z=false;
+    count=readFile();
+    printf("------------------------------------------------------------------------------------\n");
+   printf("S.N.|    NAME     |   ID  |     QUANTITY      |    PRICE    | SALES |\n");
+   printf("------------------------------------------------------------------------------------\n");
+    for (i=0;i<count;i++){
+   printf("%d     %-10s       %-8s     %-5d          %-6.2f      %.2lf  \n",i+1,prod[i].name,prod[i].id,prod[i].quantity,prod[i].price,prod[i].sales);
+   }
+	printf("\n\n Beli Barang ");
+    printf("\nProduct ID: ");
+    fflush(stdin);
+	gets(id);
+    for (i=0; i<count; i++){
+        if (strcmp(id,prod[i].id)==0) 	// if the id that the user want to find and the data id that has been saved at file is matched.
+        {
+        	z=true;
+        printf("\nItem found! Containing: \n");//...then display the match
+	   	printf("\nProduct name: %s",prod[i].name);
+		printf("\nPrice: Rp. %.2lf\n\n",prod[i].price);
+
+            printf("Enter the quantity you want to buy  : ");
+            fflush(stdin);
+			scanf("%d",&quant);
+            if (quant>prod[i].quantity){		// if the quantity is lessthan the users quant
+               puts("\nInsufficient Quantity\nPlease Restock.\n ");
+             break; // break and back to the choices.
+				}
+
+            float tempSales = prod[i].sales;  // will be executed if the quantity is greater than the users selected quantity.
+            prod[i].numSold += quant;
+            prod[i].quantity -= quant;
+            prod[i].sales = quant*prod[i].price;
+            prod[i].sales += tempSales;
+			}
+
+	}
+ if(z==false){	//if the product id is not available.
+
+	printf("Cant find the product id: %s.",id);
+}
+	writefile();
+	printf("barang terbeli!, pencet enter untuk kembali ke menu");
+    while (1) {
+        if ( kbhit() ) {
+            ch = getch();
+            if (ch == 13){
+                menu();}}}
+
+}
 
 void menu(){//tiara
     system("cls");
@@ -246,7 +581,7 @@ void menu(){//tiara
         gotoxy(47,14);
         arrowhere(1,position); printf(" 1. Daftar Merk Baju");
         gotoxy(47,15);
-        arrowhere(2,position); printf(" 2. Jumlah stok Baju");
+        arrowhere(2,position); printf(" 2. Tambah Stok Baju");//ADMIN ASW INI BUKAN PELANGGAN BANGSATTTTT JADI BINGGUNG KAN KONSEPNYA GMN
         gotoxy(47,16);
         arrowhere(3,position); printf(" 3. Kalkulasi Harga");
         gotoxy(47,17);
@@ -272,10 +607,13 @@ void menu(){//tiara
 	    merkbaju();
             break;
         case 2:
+            menu2();
             break;
         case 3:
+            purchaseprod();
             break;
         case 4:
+            nota();
             break;
         case 5:
             main();
@@ -283,164 +621,38 @@ void menu(){//tiara
 
 }
 }
-void merkbaju(){//harold
-    int ch;
+
+
+void nota(){ //Cornelius Ardhani Yoga Pratama - 672022204
+    int i,kembalian,uang;
+    float total_pembelian;
     system("cls");
-    system("COLOR 0b");
-    cover2();
-    gotoxy(53,10); printf("Merk Baju");
-    gotoxy(47,14); printf(" 1. LEVIS");
-    gotoxy(47,15); printf(" 2. THE EXECUTIVES");
-    gotoxy(47,16); printf(" 3. 3 SECONDS");
-    gotoxy(47,17); printf(" 4. UNIQLO");
-    gotoxy(47,18); printf(" 5. ZARA");
-    gotoxy(47,19); printf(" 6. BLUEBERRY");
-    gotoxy(47,20); printf(" 7. VICTORIA SECRETS");
-    gotoxy(47,21); printf(" 8. ERICO");
-    gotoxy(47,22); printf(" 9. SUPREME");
-    gotoxy(47,23); printf(" 10. H & H");
-    gotoxy(47,24); printf(" 11. BALENCIAGA");
-    gotoxy(45,26); printf("Press any key to go back to menu");
-    while (1) {
-        if ( kbhit() ) {
-            ch = getch();
-            if (ch == 13){
-                menu();}}}
+    printf("------------------------------------------------------------------------------------\n");
+    printf("    NAME     |     QUANTITY      |    PRICE    | SUBTOTAL |\n");
+    printf("------------------------------------------------------------------------------------\n");
 
-}
-void kalkulasi_harga()
-{
-    printf("\n\tSelamat Datang di Toko Baju \"SERBA ADA\"\t\n");
-    jenis_barang();
-}
-void jenis_barang()
-{
-
-int jumlahbarang, pertama, ke1;
-int subtotal[15][15];
-int ary[11][11];
-int arr[11][11];
-int harga[] ={0,80000,50000,550000,150000,125000,300000,350000,150000,140000,450000,660000};
-char pilihan;
-char *nama_barang[] = {" ", "      Levis","The EXECUTIVERS","   3 Seconds","       Uniqlo","       Zara"," BlueBerry","Victoria Secrets","   Erico","  Supreme"," H&H     ","  Balenciaga"};
-char *nomor[]={" ","Pertama","Kedua","Ketiga","Keempat","Kelima","Keenam","Ketujuh","Kedelapan","Kesembilan","Kesepuluh","Kesebelas"};
-char Rupiah [] = "Rp.";
-char *harga_barang[] ={" ","80.000.00","50.000.00", "550.000.00","150.000.00","125.000.00","300.000.00","350.000","150.000.00","140.000.00","450.000.00","660.000.00"};
-char nol_dua[]={".00"};
-
-
-    printf("\n\t=================================================\n");
-    printf("\t| %s|      %s\t| %s\t|\n", "No.", "Nama Barang", "Harga Barang(Rupiah)");
-    printf("\t|----|------------------|-----------------------|\n");
-    printf("\t|  1 |\t%s\t| %s  %s\t|\n", nama_barang[1], Rupiah, harga_barang[1]);
-    printf("\t|  2 |\t%s\t| %s  %s\t|\n", nama_barang[2], Rupiah, harga_barang[2]);
-    printf("\t|  3 |\t%s\t| %s  %s\t|\n", nama_barang[3], Rupiah, harga_barang[3]);
-    printf("\t|  4 |\t%s\t| %s  %s\t|\n", nama_barang[4], Rupiah, harga_barang[4]);
-    printf("\t|  5 |\t%s\t| %s  %s\t|\n", nama_barang[5], Rupiah, harga_barang[5]);
-    printf("\t|  6 |\t%s\t| %s  %s\t|\n", nama_barang[6], Rupiah, harga_barang[6]);
-    printf("\t|  7 |\t%s\t| %s  %s\t|\n", nama_barang[7],Rupiah, harga_barang[7]);
-    printf("\t|  8 |\t%s\t| %s  %s\t|\n", nama_barang[8], Rupiah, harga_barang[8]);
-    printf("\t|  9 |\t%s\t| %s  %s\t|\n", nama_barang[9], Rupiah, harga_barang[9]);
-    printf("\t| 10 |\t%s\t| %s  %s\t|\n", nama_barang[10], Rupiah, harga_barang[10]);
-    printf("\t| 11 |\t%s\t| %s  %s\t|\n", nama_barang[11], Rupiah, harga_barang[11]);
-    printf("\t=================================================");
-
-    printf("\n\nBerapa jenis barang yang anda beli :  ");
-    scanf("%d",&jumlahbarang);
-
-for(pertama = 1; pertama <= jumlahbarang; pertama++) //"pertama = 1" menunjukan letak array pada 1 yaitu kata pertama
-    {
-    for(ke1 = 1; ke1 < 2; ke1++){
-        printf("\nMasukan barang %s : ",nomor[pertama]);//mengambil barang pada array yaitu kata pertama
-        scanf("%d",&ary[pertama][ke1]);
-        printf("Masukan jumlah barang : ");
-        scanf("%d",&arr[pertama][ke1]);
+    for (i=0; i<count; i++){
+            total_pembelian+=prod[i].sales;
+        printf("       %-8s     %-5d             %-6.2f   =     Rp. %.2f\n",prod[i].name,quant,prod[i].price,prod[i].sales);
         }
-        }
-        printf("\n");
-
-
-
-        system("cls");
-
-int uang, kembalian;
-    printf("\n\tDaftar Keranjang Pembelian Anda : \n");
-    printf("\t=================================================================================\n");
-    printf("\t|%s |      %s | %s \t| %s | %s \t|\n", "No.", "Nama Barang", "Harga Barang(Rupiah)", "Jumlah Barang", "Subtotal");
-    printf("\t|----|------------------|-----------------------|---------------|---------------|\n");
-//menampilkan subtotal pada tabel
-    for(pertama=1;pertama<=jumlahbarang;pertama++)
-   {
-    for(ke1 = 1; ke1 < 2; ke1++)
-        {
-        subtotal[pertama][ke1]=((int) harga[ary[pertama][ke1]] * (int) arr[pertama][ke1]);
-        }
-   }
-for(pertama=1;pertama<=jumlahbarang;pertama++)
-   {
-   for(ke1 = 1; ke1 < 2; ke1++)
-   {
-   printf("\t| %d  |   %s | %s %s     \t| \t%d \t| %s%d%s \t|\n", pertama, nama_barang[ary[pertama][ke1]],Rupiah,harga_barang[ary[pertama][ke1]],arr[pertama][ke1],Rupiah,subtotal[pertama][ke1],nol_dua);
-
-   }
-   }
-    printf("\t=================================================================================\n");
-
-//menampilkan hasil total penjumlahan subtotal
-   int total=0;
-for(pertama = 1; pertama <= jumlahbarang; pertama++)
-   {
-    for(ke1 = 1; ke1 < 2; ke1++)
-        {
-         total = total + subtotal[pertama][ke1]++;
-        }
-   }
-
-    printf("\nTotal yang harus anda bayar adalah : %s%d%s",Rupiah,total,nol_dua);
-
-    uang2:
-
-    printf("\n\nMasukan uang anda :%s ",Rupiah);
+    printf("\n\nTotal pembelian Anda adalah: Rp. %.2f",total_pembelian);
+    bayar:
+    printf("\n\n\tMasukan uang anda :Rp. ");
     scanf("%d",&uang);
 
-if(uang < total) //jika uang nya tidak mencukupi maka akan print angka dibawah
-   {
-    printf("\nMaaf uang anda kurang, Silahkan ulangi transaksi!!!\n");
-    printf("Silahkan masukan kembali uang anda!!!");
-
-goto uang2;
-   }
-        //untuk menampilkan uang kembalian
-        kembalian = uang - total;
-
-    printf("Kembalian anda : %s%d%s\n\n",Rupiah,kembalian,nol_dua);
-    printf("Terimakasih Sudah Bertransaksi Di Toko Kami");
-    printf("\n\nApakah anda ingin melanjutkan proses transaksi (y/t) : ");
-    scanf("%s",&pilihan);
-
-
-
-    pilihan:
-
-switch(pilihan)
+    if(uang < total_pembelian) //jika uang nya tidak mencukupi maka akan print angka dibawah
     {
-case 'y':
-    system("cls");
-kalkulasi_harga();
-break;
-
-case 't':
-    printf("\tTerimakasih banyak\n");
-break;
-
-default:
-    printf("Pilihan yang anda masukan salah!!!\n");
-    printf("Silahkan masukan pilihan yang benar!!!");
-
-goto pilihan;
+    printf("\tMaaf uang anda kurang, Silahkan ulangi transaksi!!!\n");
+    printf("\tSilahkan masukan kembali uang anda!!!");
+    goto bayar;
     }
+        //untuk menampilkan uang kembalian
+        kembalian = uang - total_pembelian;
 
-
+    printf("\tKembalian anda : Rp. %d\n\n",kembalian);
+    printf("\tTerimakasih Sudah Bertransaksi Di Toko Kami\n\n");
+    system("pause");
+    menu();
 }
 
 
@@ -606,7 +818,7 @@ void ex(){//tiara
     gotoxy(20,29);printf("Harold Tanuwijaya                672022107");
     gotoxy(20,30);printf("Cornelius Ardhani Yoga Pratama   672022204");
     gotoxy(20,31);printf("M. Abdurrahman Al Munawar        672022304");
-    gotoxy(20,32);printf("M. Abdurrahman Al Munawar        672022304");
+    gotoxy(20,32);printf("Kevin Nahot                      672022322");
     for(i=21;i<=36;i++){
         gotoxy(100,i);printf("%c",219);
         Sleep(50);
@@ -623,34 +835,6 @@ void ex(){//tiara
     exit(0);
 }
 
-void invalid(){//tiara
-    int i;
-    system("cls");
-    gotoxy(52,11);printf("Loading..");
-    gotoxy(51,17);printf("Processing");
-    gotoxy(74,15);printf("%c",217);
-    gotoxy(38,15);printf("%c",192);
-    gotoxy(38,13);printf("%c",218);
-    gotoxy(74,13);printf("%c",191);
-    for(i=40;i<73;i++){
-    gotoxy(i,14);printf("%c",177);}
-    for(i=14;i<15;i++){
-    gotoxy(38,i);printf("%c",179);}
-    for(i=14;i<15;i++){
-    gotoxy(74,i);printf("%c",179);}
-    for(i=39;i<74;i++){
-    gotoxy(i,15);printf("%c",196);}
-    for(i=39;i<74;i++){
-    gotoxy(i,13);printf("%c",196);}
-    system("COLOR 7");
-    gotoxy(40,14);
-    for(i=0;i<33;i++){
-        printf("%c",219);
-        Sleep(100);
-    }
-    system("COLOR 4");
-    Beep(750,300);
-}
 
 
 
@@ -690,6 +874,7 @@ void welcome(){//tiara
     Sleep(1000);
 }
 
+
 void cover(){//tiara
     int i;
     for (i=42;i<=79;i++){
@@ -726,24 +911,6 @@ void cover1(){//tiara
     }
 }
 
-void cover2(){//harold
-    int i;
-    for (i=42;i<=79;i++){
-        gotoxy(i,8);printf("%c",178);
-    }
-    for (i=42;i<=79;i++){
-        gotoxy(i,28);printf("%c",178);
-    }
-    for (i=42;i<=79;i++){
-        gotoxy(i,12);printf("%c",178);
-    }
-    for (i=8;i<=28;i++){
-        gotoxy(42,i);printf("%c",178);
-    }
-    for (i=8;i<=28;i++){
-        gotoxy(79,i);printf("%c",178);
-    }
-}
 
 void arrowhere (int realposition,int arrowposition){//tiara
     if(realposition == arrowposition){
@@ -752,3 +919,4 @@ void arrowhere (int realposition,int arrowposition){//tiara
         printf("   ");
     }
 }
+
