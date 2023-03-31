@@ -541,9 +541,11 @@ void menu(){//tiara
         gotoxy(47,17);
         arrowhere(4,position); printf(" 4. Struk Baju");
         gotoxy(47,18);
-        arrowhere(5,position); printf(" 5. LOG OUT");
+        arrowhere(5,position); printf(" 5. Cari produk");
+        gotoxy(47,19);
+        arrowhere(6,position); printf(" 6. LOG OUT");
         keyPressed = getch();
-        if(keyPressed == 80 && position !=5){
+        if(keyPressed == 80 && position !=6){
             position++;
         }else if(keyPressed == 72 && position !=1){
             position--;
@@ -570,6 +572,9 @@ void menu(){//tiara
             nota();
             break;
         case 5:
+            cari();
+            break;
+        case 6:
             main();
             break;
 
@@ -602,6 +607,38 @@ void nota(){ //Cornelius Ardhani Yoga Pratama - 672022204
     printf("\tKembalian anda : Rp. %d\n\n",kembalian);
     printf("\tTerimakasih Sudah Bertransaksi Di Toko Kami\n\n");
     system("pause");
+    menu();
+}
+
+int binarySearch(char *cari1){//tiara
+    int start_index =0,end_index=count-1,middle;
+    while(start_index <=end_index){
+        middle=(start_index +end_index)/2;
+            if(strcmp(prod[middle].name,cari1)==0 || strcmp(prod[middle].id,cari1)==0){
+                printf("\nProduct ID: %s\nProduct Name: %s\nQuantity: %d\nPrice: %.2f\n",prod[middle].id,prod[middle].name,prod[middle].quantity,prod[middle].price);
+                break;
+            }
+            else if(strcmp(prod[middle].name,cari1)<0 || strcmp(prod[middle].id,cari1)<0){
+                start_index =middle+1;
+            }
+            else{
+                end_index=middle-1;
+            }
+    }
+    if(start_index>end_index){
+        printf("\nNOT FOUND !");
+    }
+}
+
+
+int cari(){//tiara
+    system("cls");
+    count=readFile();
+    char cari1[20];
+    printf("\nEnter product name or ID to search: ");
+    scanf("%s",cari1);
+    binarySearch(cari1);
+    getch();
     menu();
 }
 
@@ -892,4 +929,3 @@ void arrowhere (int realposition,int arrowposition){//tiara
         printf("   ");
     }
 }
-
