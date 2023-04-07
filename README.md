@@ -5,12 +5,11 @@ trus nanti di atas kanan ada gambar pesil click itu untuk ngedit
 
 ## Update changes
 - Sudah ditambahin menu merk bajunya (Harold)
+- update delete uda aku pisahin (Yoga)
 
 
 ## Bug Report (Kalau ada bisa tambahin disini)
-- bug 1
-- bug 2
-- ambatubug
+- nurunin bingkai cover gimana :(
 
 ### Anggota Kelompok :
 1. Pradena Tiara Maharani (672022028) 
