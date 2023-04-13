@@ -490,29 +490,29 @@ void beliprod(){     // function beli produk
 void menu(){     //tiara
     system("cls");
     system("COLOR 0b");
-    cover();
+    cover2();
     int position = 1;
     int keyPressed = 0;
     int maxoption = 9;
-    gotoxy(53,10);printf("Menu Toko Baju");
+    gotoxy(53,9);printf("Menu Toko Baju");
     while(keyPressed != 13){
-        gotoxy(47,14);
+        gotoxy(45,13);
         arrowhere(1,position); printf(" 1. Daftar Merk Baju");
-        gotoxy(47,15);
+        gotoxy(45,14);
         arrowhere(2,position); printf(" 2. Tambah Stok Baju (Create)");
-        gotoxy(47,16);
+        gotoxy(45,15);
         arrowhere(3,position); printf(" 3. Beli Barang");
-        gotoxy(47,17);
+        gotoxy(45,16);
         arrowhere(4,position); printf(" 4. Struk Baju");
-        gotoxy(47,18);
+        gotoxy(45,17);
         arrowhere(5,position); printf(" 5. Cari produk (Search)");
-        gotoxy(47,19);
+        gotoxy(45,18);
         arrowhere(6,position); printf(" 6. Update");
-        gotoxy(47,20);
+        gotoxy(45,19);
         arrowhere(7,position); printf(" 7. Delete");
-        gotoxy(47,21);
+        gotoxy(45,20);
         arrowhere(8,position); printf(" 8. Sorting");
-        gotoxy(47,22);
+        gotoxy(45,21);
         arrowhere(9,position); printf(" 9. LOG OUT");
         keyPressed = getch();
         if(keyPressed == 80 && position !=9){
@@ -1037,6 +1037,26 @@ void cover1(){   //tiara
     }
     for (i=8;i<=21;i++){
         gotoxy(93,i);printf("%c",219);
+    }
+}
+
+
+void cover2(){    //tiara
+    int i;
+    for (i=40;i<=79;i++){
+        gotoxy(i,7);printf("%c",178);
+    }
+    for (i=40;i<=79;i++){
+        gotoxy(i,23);printf("%c",178);
+    }
+    for (i=40;i<=79;i++){
+        gotoxy(i,11);printf("%c",178);
+    }
+    for (i=7;i<=23;i++){
+        gotoxy(40,i);printf("%c",178);
+    }
+    for (i=7;i<=23;i++){
+        gotoxy(79,i);printf("%c",178);
     }
 }
 
