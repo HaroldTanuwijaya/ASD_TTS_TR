@@ -6,6 +6,7 @@ trus nanti di atas kanan ada gambar pesil click itu untuk ngedit
 ## Update changes
 - Sudah ditambahin menu merk bajunya (Harold)
 - update delete uda aku pisahin (Yoga)
+- Fungsi sorting uda ada (Yoga)
 
 
 ## Bug Report (Kalau ada bisa tambahin disini)
