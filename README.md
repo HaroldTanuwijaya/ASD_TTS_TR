@@ -1,4 +1,4 @@
-# TOKO BAJU
+# TOKO BAJU (CLEARED)
 
 Okay gaes codingan nya bisa di kotak katik tinggal click tuh file "tokobaju.c" nya :D
 trus nanti di atas kanan ada gambar pesil click itu untuk ngedit 
@@ -7,6 +7,7 @@ trus nanti di atas kanan ada gambar pesil click itu untuk ngedit
 - Sudah ditambahin menu merk bajunya (Harold)
 - update delete uda aku pisahin (Yoga)
 - Fungsi sorting uda ada (Yoga)
+- No more updates needed(Harold)
 
 
 ## Bug Report (Kalau ada bisa tambahin disini)
